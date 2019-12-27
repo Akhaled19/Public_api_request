@@ -1,0 +1,2 @@
+# Unit5-public_api_request
+ Built an app for a fictional company called Awsome Startup, a distributed company with remote employees working all over the world. Used Random User Generator API to grab information for 12 random "employees," and use that data to build Awsome Startup prototype. This project demonstrates ability to work with public APIs, making API requests, and asynchronously handling data. 
