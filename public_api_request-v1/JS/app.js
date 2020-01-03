@@ -5,6 +5,8 @@ alert('testing');
 
                                  //API Usage//
 //pull 12 random users from the API
+    //send a single request to the API
+    //use the response data to display 12 users(this goes in the User Directory) 
 
 //new random employee information displays each time the page loads (?)
 
