@@ -1,13 +1,33 @@
 alert('testing');
 
                                  //GLOBAL VARIABLES// 
+//const randomUserGenerator = 'https://randomuser.me/api/';
+
+
+let xhr = new XMLHttpRequest();
+xhr.open('GET', 'https://randomuser.me/api/');
+
+xhr.onreadystatechange = function() {
+    if(xhr.readyState === 4) {
+    var data = JSON.parse(xhr.responseText);
+    }
+
+    console.log(data);
+
+}
+
+xhr.send();
 
 
                                  //API Usage//
 //pull 12 random users from the API
     //send a single request to the API
+//async function fetchData(url) {    
     //use the response data to display 12 users(this goes in the User Directory) 
-
+//    const response = await fetch(url); //we use await keyword to wait for a response 
+//    const data = response.json(); //then, we parse the response to json
+//    return data; //we return the data to be used
+//}
 //new random employee information displays each time the page loads (?)
 
 
