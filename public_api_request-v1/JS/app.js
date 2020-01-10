@@ -10,20 +10,36 @@ const modalContainer = document.createElement('div');
                                 //API Usage//
 //pull 12 random users from the API
     //send a single request to the API w/ promise 
-    fetch(randomUsersUrl)
-        .then( response => response.json() )
-        .then( data => console.log(data) )
+
+    fetch('https://randomuser.me/api/?results=12&inc=name,email,location,cell,picture')
+        ,then(response => response.json() )
+        .then( data => console.log(generateHTML(data) ))
         .catch( err => console.error(err))
-    
-//new random employee information displays each time the page loads 
-    //function
-        //get random
-        //onload = display
 
 
                                //User Directory//     
 
 //12 random user API Info:
+function generateHTML(data) {
+    const userImg = data.map(user => 
+        `
+        <div class="card">
+            <div class="card-img-container">
+                <img class="card-img" src="${user.picture[medium]}" alt="profile picture">
+            </div>
+            <div class="card-info-container">
+                <h3 id="name" class="card-name cap">${user.first} ${user.last}</h3>
+                <p class="card-text">${user.email}</p>
+                <p class="card-text cap">${user.location[city]} , ${user.location[state]}</p>
+            </div>
+         </div>
+        `
+        
+
+
+    )
+
+}
     //First and Last name 
     //Email 
     //City or location
