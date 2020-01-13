@@ -39,51 +39,49 @@ const bodyElement = document.getElementsByTagName('body');
 
 //12 random user API Info:
 function generateImg(data) {
-    const userImg = data.map(user => 
+    const card = document.createElement('div');
+    card.className = 'card';
+    galleryDiv.appendChild(card);
+    card.innerHTML = 
+
     //First and Last name 
     //Email 
     //City or location
         `
-        <div class="card">
             <div class="card-img-container">
                 <img class="card-img" src="${user.picture[medium]}" alt="profile picture">
             </div>
             <div class="card-info-container">
-                <h3 id="name" class="card-name cap">${user.first} ${user.last}</h3>
+                <h3 id="name" class="card-name cap">${user.name[first]} ${user.name[last]}</h3>
                 <p class="card-text">${user.email}</p>
-                <p class="card-text cap">${user.location[city]} , ${user.location[state]}</p>
+                <p class="card-text cap">${user.location[city]}, ${user.location[state]}</p>
             </div>
-         </div>
-        `
-    )
-    galleryDiv.appendChild(userImg);
-
+        `;
 }
 function generateModal(data) {
-    const userInfo = data.map(user => 
-        `
-        <div class="modal-container">
+    const modalContainer = document.createElement('div');
+    modalContainer.className = 'modal-container';
+    bodyElement.appendChild(modalContainer);
+    modalContainer.style.display = 'none';
+    modalContainer.innerHTML = `
                 <div class="modal">
                     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
                     <div class="modal-info-container">
-                        <img class="modal-img" src=${user.picture[medium]} alt="profile picture">
-                        <h3 id="name" class="modal-name cap">${user.name}</h3>
+                        <img class="modal-img" src=${user.picture[large]} alt="profile picture">
+                        <h3 id="name" class="modal-name cap">${user.name[first]} ${user.name[last]}</h3>
                         <p class="modal-text">${user.email}</p>
                         <p class="modal-text cap">${user.location[city]}</p>
                         <hr>
                         <p class="modal-text">${user.cell}</p>
                         <p class="modal-text">${user.location[street]}, ${user.location[city]}, ${user.location[state]}, ${user.location[postcode]}</p>
-                        <p class="modal-text">${user.dob}Birthday: 10/21/2015</p>
+                        <p class="modal-text">${user.dob[data]}Birthday: 10/21/2015</p>
                     </div>
                 </div>
                 <div class="modal-btn-container">
                 <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
                 <button type="button" id="modal-next" class="modal-next btn">Next</button>
             </div>
-        </div>
-        `
-    )
-  
+        `;
 }    
 
 //Employees can be filtered by name 
