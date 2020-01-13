@@ -12,7 +12,7 @@ const bodyElement = document.getElementsByTagName('body');
     //send a single request to the API w/ promise 
 
     fetch('https://randomuser.me/api/?results=12&inc=name,email,location,cell,picture')
-        ,then(response => response.json() )
+        .then(response => response.json() )
         .then( data => console.log(data) )
         .catch( err => console.error(err) )
     
