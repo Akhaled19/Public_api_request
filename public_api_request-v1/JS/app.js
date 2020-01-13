@@ -1,11 +1,11 @@
+
                                 //Global Variables 
 //header
-const headerSearchContainer = document.getElementsByClassName('search-container');
+const searchDiv = document.getElementsByClassName('search-container');
 const galleryDiv = document.getElementsByClassName('gallery');
 
 //body
 const bodyElement = document.getElementsByTagName('body');
-
 
                                 //API Usage//
 //pull 12 random users from the API
@@ -13,12 +13,12 @@ const bodyElement = document.getElementsByTagName('body');
 
     fetch('https://randomuser.me/api/?results=12&inc=name,email,location,cell,picture')
         ,then(response => response.json() )
-        .then( data => console.log(generateHTML(data)) )
+        .then( data => console.log(data) )
         .catch( err => console.error(err) )
     
     fetch('https://randomuser.me/api/?results=12&inc=dob')
-        .then( dobResponse => dobResponse.json() )
-        .then( dob => console.log(generateHTML(dob)) )
+        .then( dobResponse => dobResponse.json(reviver) )
+        .then( dob => console.log(dob) )
         .catch( err => console.error(err) )
          
         
