@@ -12,7 +12,7 @@ const bodyElement = document.getElementsByTagName('body');
     //send a single request to the API w/ promise 
     fetch(`https://randomuser.me/api/?results=12&inc=name,email,cell,location,dob,picture`)
         .then(response => response.json() )
-        .then(data => generateImg(data.reults))
+        .then(data => generateImg(data.results))
         .catch( err => console.error(`Problem with request: ${err.message}`) )
     
         
@@ -69,11 +69,10 @@ function generateModal(data) {
     //loop through cards and generate modals 
     for(let i = 0; i < card[i]; i++) {
         //add a click event on card 
-        card[i].addEventListener('click', (e) => {
+        card[i].addEventListener('click', () => {
             const modalContainer = document.createElement('div');
             modalContainer.setAttribute('class' , 'modal-container');
             bodyElement.appendChild(modalContainer);
-            modalContainer.style.display = 'none';
             modalContainer.innerHTML = `
                         <div class="modal">
                             <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -96,7 +95,7 @@ function generateModal(data) {
             
             //add a click event on the close button 
             const closeButton = document.getElementById('modal-close-btn');
-            closeButton.addEventListener('click', (e) => {
+            closeButton.addEventListener('click', () => {
                 bodyElement.removeChild(modalContainer);
             });    
         })
