@@ -6,14 +6,23 @@ const galleryDiv = document.getElementsByClassName('gallery');
 
 //body
 const bodyElement = document.getElementsByTagName('body');
+let usersArray = [];
+
+
 
                                 //API Usage//
-//pull 12 random users from the API
-    //send a single request to the API w/ promise 
-    fetch(`https://randomuser.me/api/?results=12&inc=name,email,cell,location,dob,picture`)
+//pull 12 random users from US from the API 
+    //fetch data 
+    fetch(`https://randomuser.me/api/?results=12&inc=name,email,cell,location,dob,picture&nat=us`)
+    //convert to json
         .then(response => response.json() )
-        .then(data => generateImg(data.results))
-        .catch( err => console.error(`Problem with request: ${err.message}`) )
+    // takes parsed data and adds it to an array and calls the helper function   
+        .then(data => {
+            usersArray = [...data.results];
+            generateCards(data.results);
+        })
+    //catching errors     
+       // .catch( err => console.error(`Problem with request: ${err.message}`) )
     
         
                                //helper functions
@@ -28,6 +37,8 @@ const bodyElement = document.getElementsByTagName('body');
         return dob;
     }
 
+    
+
                                //Search Box// 
 //Employees can be filtered by name 
 function appendSearchDiv(data) {
@@ -37,70 +48,74 @@ searchDiv.innerHTML = `
         <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
     </form>
 `; 
+searchDiv.action = '#';
+searchDiv.method = 'get';
 }
        
 
                                //User Directory//     
 
-//12 random user API Info:
-function appendGallery(data) {
+//function creates a card for each user 
+function generateCards(data) {
     data.map(user => {
-    const card = document.createElement('div');
-    card.setAttribute('class' , 'card');
-    galleryDiv.appendChild(card);
-    card.innerHTML = 
-        `
-            <div class="card-img-container">
-                <img class="card-img" src="${user.picture[medium]}" alt="profile picture">
-            </div>
-            <div class="card-info-container">
-                <h3 id="name" class="card-name cap">${user.name[first]} ${user.name[last]}</h3>
-                <p class="card-text">${user.email}</p>
-                <p class="card-text cap">${user.location[city]}, ${user.location[state]}</p>
-            </div>
-        `;
+        let card = 
+           `
+            <div title=${user} class="card">
+                <div title=${user} class="card-img-container">
+                    <img title=${user} class="card-img" src="${user.picture.medium}" alt="profile picture">
+                </div>
+                <div title=${user} class="card-info-container">
+                    <h3 title=${user} id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
+                    <p title=${user} class="card-text">${user.email}</p>
+                    <p title=${user} class="card-text cap">${user.location.city}, ${user.location.state}</p>
+                </div>
+            </div>     
+            `;
+        galleryDiv.innerHTML = card;    
     })    
-    galleryDiv.appendChild(userImg);   
-}
+}  
+
+
 
                              //Modal Window//
+//function creates modal for each user (extends info)                             
 function generateModal(data) {
-    const card = document.getElementsByClassName('card');
-    //loop through cards and generate modals 
-    for(let i = 0; i < card[i]; i++) {
-        //add a click event on card 
-        card[i].addEventListener('click', () => {
-            const modalContainer = document.createElement('div');
-            modalContainer.setAttribute('class' , 'modal-container');
-            bodyElement.appendChild(modalContainer);
-            modalContainer.innerHTML = `
-                        <div class="modal">
-                            <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-                            <div class="modal-info-container">
-                                <img class="modal-img" src=${user.picture[large]} alt="profile picture">
-                                <h3 id="name" class="modal-name cap">${user.name[first]} ${user.name[last]}</h3>
-                                <p class="modal-text">${user.email}</p>
-                                <p class="modal-text cap">${user.location[city]}</p>
-                                <hr>
-                                <p class="modal-text">${user.cell}</p>
-                                <p class="modal-text">${user.location[street]}, ${user.location[city]}, ${user.location[state]}, ${user.location[postcode]}</p>
-                                <p class="modal-text">${user.dob[date]}Birthday: 10/21/2015</p>
-                            </div>
-                        </div>
-                        <div class="modal-btn-container">
-                        <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-                        <button type="button" id="modal-next" class="modal-next btn">Next</button>
-                    </div>
-                `;
-            
-            //add a click event on the close button 
-            const closeButton = document.getElementById('modal-close-btn');
-            closeButton.addEventListener('click', () => {
-                bodyElement.removeChild(modalContainer);
-            });    
-        })
-    }    
-}    
+   
+    const modalContainer = document.createElement('div');
+    modalContainer.setAttribute('class' , 'modal-container');
+    modalContainer.innerHTML = `
+        <div class="modal">
+            <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+            <div class="modal-info-container">
+                img class="modal-img" src=${user.picture.large} alt="profile picture">
+                <h3 id="name" class="modal-name cap">${user.name.first} ${user.name.last}</h3>
+                <p class="modal-text">${user.email}</p>
+                <p class="modal-text cap">${user.location.city}</p>
+                <hr>
+                <p class="modal-text">${user.cell}</p>
+                <p class="modal-text">${user.location.street}, ${user.location.city}, ${user.location.state}, ${user.location.postcode}</p>
+                <p class="modal-text">${user.dob.date}Birthday: 10/21/2015</p>
+            </div>
+        </div>
+            <div class="modal-btn-container">
+                <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                <button type="button" id="modal-next" class="modal-next btn">Next</button>
+            </div>
+        `;
+    bodyElement.appendChild(modalContainer);
+    modalContainer.style.display = 'block';
+
+
+    //add a click event on the close button 
+    const closeButton = document.getElementById('modal-close-btn');
+    closeButton.addEventListener('click', () => {
+        bodyElement.removeChild(modalContainer);
+    });    
+  
+}            
+          
+       
+   
 
                              //Modal Window//
 
