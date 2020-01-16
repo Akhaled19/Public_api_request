@@ -79,7 +79,7 @@ function generateCards(data) {
 
                              //Modal Window//
 //function creates modal for each user (extends info)                             
-function generateModal(data) {
+function generateModal(user) {
    
     const modalContainer = document.createElement('div');
     modalContainer.setAttribute('class' , 'modal-container');
