@@ -2,7 +2,8 @@
                                 //Global Variables 
 //header
 const searchDiv = document.getElementsByClassName('search-container');
-const galleryDiv = document.getElementsByClassName('gallery');
+const galleryDiv = document.getElementById('gallery');
+console.log(`the problem: ${galleryDiv}`);
 
 //body
 const bodyElement = document.getElementsByTagName('body');
@@ -13,13 +14,14 @@ let usersArray = [];
                                 //API Usage//
 //pull 12 random users from US from the API 
     //fetch data 
-    fetch(`https://randomuser.me/api/?results=12&inc=name,email,cell,location,dob,picture&nat=us`)
+    fetch(`https://randomuser.me/api/?results=12&inc=name,email,cell,location,dob,picture`)
     //convert to json
         .then(response => response.json() )
     // takes parsed data and adds it to an array and calls the helper function   
         .then(data => {
             usersArray = [...data.results];
             generateCards(data.results);
+            console.log(generateCards);
         })
     //catching errors     
        // .catch( err => console.error(`Problem with request: ${err.message}`) )
@@ -56,23 +58,26 @@ searchDiv.method = 'get';
                                //User Directory//     
 
 //function creates a card for each user 
-function generateCards(data) {
-    data.map(user => {
+function generateCards(employee) {
+    //create a card for each user 
+    for(let i = 0; i < employee.length; i++) {
         let card = 
            `
-            <div title=${user} class="card">
-                <div title=${user} class="card-img-container">
-                    <img title=${user} class="card-img" src="${user.picture.medium}" alt="profile picture">
+            <div title=${employee} class="card">
+                <div title=${employee} class="card-img-container">
+                    <img title=${employee} class="card-img" src="${employee[i].picture.medium}" alt="profile picture">
                 </div>
-                <div title=${user} class="card-info-container">
-                    <h3 title=${user} id="name" class="card-name cap">${user.name.first} ${user.name.last}</h3>
-                    <p title=${user} class="card-text">${user.email}</p>
-                    <p title=${user} class="card-text cap">${user.location.city}, ${user.location.state}</p>
+                <div title=${employee} class="card-info-container">
+                    <h3 title=${employee} id="name" class="card-name cap">${employee[i].name.first} ${employee[i].name.last}</h3>
+                    <p title=${employee} class="card-text">${employee[i].email}</p>
+                    <p title=${employee} class="card-text cap">${employee[i].location.city}, ${employee[i].location.state}</p>
                 </div>
             </div>     
             `;
-        galleryDiv.innerHTML = card;    
-    })    
+        galleryDiv.innerHTML += card; 
+        console.log(`galleryDiv: ${galleryDiv}`);
+
+    }    
 }  
 
 
@@ -83,7 +88,7 @@ function generateModal(user) {
    
     const modalContainer = document.createElement('div');
     modalContainer.setAttribute('class' , 'modal-container');
-    modalContainer.innerHTML = `
+    modalContainer.innerHTML += `
         <div class="modal">
             <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
             <div class="modal-info-container">
@@ -104,6 +109,8 @@ function generateModal(user) {
         `;
     bodyElement.appendChild(modalContainer);
     modalContainer.style.display = 'block';
+
+    //click event on the card to display modal window 
 
 
     //add a click event on the close button 
