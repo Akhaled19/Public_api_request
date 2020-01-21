@@ -3,7 +3,7 @@
 //header
 const searchDiv = document.getElementsByClassName('search-container');
 const galleryDiv = document.getElementById('gallery');
-console.log(`the problem: ${galleryDiv}`);
+//console.log(`the problem: ${galleryDiv}`);
 
 //body
 const bodyElement = document.getElementsByTagName('body');
@@ -21,7 +21,7 @@ let usersArray = [];
         .then(data => {
             usersArray = [...data.results];
             generateCards(data.results);
-            console.log(generateCards);
+            //console.log(generateCards);
         })
     //catching errors     
        // .catch( err => console.error(`Problem with request: ${err.message}`) )
@@ -75,7 +75,7 @@ function generateCards(employee) {
             </div>     
             `;
         galleryDiv.innerHTML += card; 
-        console.log(`galleryDiv: ${galleryDiv}`);
+        //console.log(`galleryDiv: ${galleryDiv}`);
 
     }    
 }  
@@ -85,10 +85,9 @@ function generateCards(employee) {
                              //Modal Window//
 //function creates modal for each user (extends info)                             
 function generateModal(user) {
-   
     const modalContainer = document.createElement('div');
     modalContainer.setAttribute('class' , 'modal-container');
-    modalContainer.innerHTML += `
+    modalContainer.innerHTML = `
         <div class="modal">
             <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
             <div class="modal-info-container">
@@ -107,12 +106,11 @@ function generateModal(user) {
                 <button type="button" id="modal-next" class="modal-next btn">Next</button>
             </div>
         `;
+        
     bodyElement.appendChild(modalContainer);
     modalContainer.style.display = 'block';
-
-    //click event on the card to display modal window 
-
-
+ 
+  
     //add a click event on the close button 
     const closeButton = document.getElementById('modal-close-btn');
     closeButton.addEventListener('click', () => {
@@ -121,7 +119,13 @@ function generateModal(user) {
   
 }            
           
-       
+//click event on the card to display modal window 
+galleryDiv.addEventListener('click', (e) => {
+    if(e.target.className.includes('card')) {
+    generateModal(usersArray[e.target.title]);
+    console.log('clicked: ' + generateModal);
+    }
+});           
    
 
                              //Modal Window//
