@@ -6,7 +6,7 @@ const galleryDiv = document.getElementById('gallery');
 //console.log(`the problem: ${galleryDiv}`);
 
 //body
-const bodyElement = document.querySelectorAll('body');
+const bodyElement = document.querySelector('body');
 let usersArray = [];
 
 
@@ -81,7 +81,6 @@ function generateCards(employee) {
 }  
 
 
-
                              //Modal Window//
 //function creates modal for each user (extends info)                             
 function generateModal(user) {
@@ -93,14 +92,14 @@ function generateModal(user) {
         <div class="modal">
             <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
             <div class="modal-info-container">
-                <img class="modal-img" src=${user.picture.medium} alt="profile picture">
+                <img class="modal-img" src=${user.picture.large} alt="profile picture">
                 <h3 id="name" class="modal-name cap">${user.name.first} ${user.name.last}</h3>
                 <p class="modal-text">${user.email}</p>
                 <p class="modal-text cap">${user.location.city}</p>
                 <hr>
                 <p class="modal-text">${user.cell}</p>
-                <p class="modal-text">${user.location.street}, ${user.location.city}, ${user.location.state}, ${user.location.postcode}</p>
-                <p class="modal-text">${user.dob.date}Birthday: 10/21/2015</p>
+                <p class="modal-text">${user.location.street.number} ${user.location.street.name}, ${user.location.city}, ${user.location.state}, ${user.location.postcode}</p>
+                <p class="modal-text">${user.dob.date}</p>
             </div>
         </div>
             <div class="modal-btn-container">
@@ -108,16 +107,20 @@ function generateModal(user) {
                 <button type="button" id="modal-next" class="modal-next btn">Next</button>
             </div>
     `;
+    console.log(`birthday: ${user.dob.data}`);
    
     bodyElement.appendChild(modalContainer);
     modalContainer.style.display = 'block';
  
   
     //add a click event on the close button 
-    //const closeButton = document.getElementById('modal-close-btn');
-    //closeButton.addEventListener('click', () => {
-    //    bodyElement.removeChild(modalContainer);
-   // });    
+    const closeButton = document.getElementById('modal-close-btn');
+    closeButton.addEventListener('click', () => {
+        bodyElement.removeChild(modalContainer);
+    });    
+
+    //add functionality to switch back and forth between is 
+        //beginning and end of the list !== error in the console 
   
 }            
           
