@@ -6,7 +6,7 @@ const galleryDiv = document.getElementById('gallery');
 //console.log(`the problem: ${galleryDiv}`);
 
 //body
-const bodyElement = document.getElementsByTagName('body');
+const bodyElement = document.querySelectorAll('body');
 let usersArray = [];
 
 
@@ -14,7 +14,7 @@ let usersArray = [];
                                 //API Usage//
 //pull 12 random users from US from the API 
     //fetch data 
-    fetch(`https://randomuser.me/api/?results=12&inc=name,email,cell,location,dob,picture`)
+    fetch(`https://randomuser.me/api/?results=12&nat=us`)
     //convert to json
         .then(response => response.json() )
     // takes parsed data and adds it to an array and calls the helper function   
@@ -42,7 +42,7 @@ let usersArray = [];
     
 
                                //Search Box// 
-//Employees can be filtered by name 
+//is can be filtered by name 
 function appendSearchDiv(data) {
 searchDiv.innerHTML = `
     <form action="#" method="get">
@@ -60,17 +60,17 @@ searchDiv.method = 'get';
 //function creates a card for each user 
 function generateCards(employee) {
     //create a card for each user 
-    for(let i = 0; i < employee.length; i++) {
+    for( i = 0; i < employee.length; i++) {
         let card = 
            `
-            <div title=${employee} class="card">
-                <div title=${employee} class="card-img-container">
-                    <img title=${employee} class="card-img" src="${employee[i].picture.medium}" alt="profile picture">
+            <div title="${i}" class="card">
+                <div title="${i}" class="card-img-container">
+                    <img title="${i}" class="card-img" src="${employee[i].picture.medium}" alt="profile picture">
                 </div>
-                <div title=${employee} class="card-info-container">
-                    <h3 title=${employee} id="name" class="card-name cap">${employee[i].name.first} ${employee[i].name.last}</h3>
-                    <p title=${employee} class="card-text">${employee[i].email}</p>
-                    <p title=${employee} class="card-text cap">${employee[i].location.city}, ${employee[i].location.state}</p>
+                <div title="${i}"class="card-info-container">
+                    <h3 title="${i}" id="name" class="card-name cap">${employee[i].name.first} ${employee[i].name.last}</h3>
+                    <p title="${i}" class="card-text">${employee[i].email}</p>
+                    <p title="${i}" class="card-text cap">${employee[i].location.city}, ${employee[i].location.state}</p>
                 </div>
             </div>     
             `;
@@ -85,13 +85,15 @@ function generateCards(employee) {
                              //Modal Window//
 //function creates modal for each user (extends info)                             
 function generateModal(user) {
+    console.log(user);    
     const modalContainer = document.createElement('div');
     modalContainer.setAttribute('class' , 'modal-container');
-    modalContainer.innerHTML = `
+    modalContainer.innerHTML = 
+    `
         <div class="modal">
             <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
             <div class="modal-info-container">
-                img class="modal-img" src=${user.picture.large} alt="profile picture">
+                <img class="modal-img" src=${user.picture.medium} alt="profile picture">
                 <h3 id="name" class="modal-name cap">${user.name.first} ${user.name.last}</h3>
                 <p class="modal-text">${user.email}</p>
                 <p class="modal-text cap">${user.location.city}</p>
@@ -105,17 +107,17 @@ function generateModal(user) {
                 <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
                 <button type="button" id="modal-next" class="modal-next btn">Next</button>
             </div>
-        `;
-        
+    `;
+   
     bodyElement.appendChild(modalContainer);
     modalContainer.style.display = 'block';
  
   
     //add a click event on the close button 
-    const closeButton = document.getElementById('modal-close-btn');
-    closeButton.addEventListener('click', () => {
-        bodyElement.removeChild(modalContainer);
-    });    
+    //const closeButton = document.getElementById('modal-close-btn');
+    //closeButton.addEventListener('click', () => {
+    //    bodyElement.removeChild(modalContainer);
+   // });    
   
 }            
           
@@ -123,7 +125,8 @@ function generateModal(user) {
 galleryDiv.addEventListener('click', (e) => {
     if(e.target.className.includes('card')) {
     generateModal(usersArray[e.target.title]);
-    console.log('clicked: ' + generateModal);
+
+    console.log(`clicked: ${e.target} `);
     }
 });           
    
@@ -132,11 +135,11 @@ galleryDiv.addEventListener('click', (e) => {
 
 //Click event on user = open detail modal window 
 
-    //add functionality to switch back and forth between employees 
+    //add functionality to switch back and forth between is 
         //beginning and end of the list !== error in the console 
 
     //Modal window displays the following:
-        // Employee image 
+        // i image 
         // Name 
         //Email 
         //City or location 
