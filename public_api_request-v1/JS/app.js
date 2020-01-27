@@ -113,23 +113,49 @@ function generateModal(user) {
     modalContainer.style.display = 'block';
  
   
-    //add a click event on the close button 
+                        //add a click event on the close button// 
     const closeButton = document.getElementById('modal-close-btn');
     closeButton.addEventListener('click', () => {
         bodyElement.removeChild(modalContainer);
     });    
 
-    //add functionality to switch back and forth between is 
-        //beginning and end of the list !== error in the console 
-  
+                //add functionality to switch back and forth between modals//
+    const prev = document.getElementById('modal-prev');
+    const next = document.getElementById('modal-next');
+    let usersArrayIndex = usersArray.indexOf(user);
+
+
+    next.addEventListener('click', () => {
+        bodyElement.removeChild(modalContainer)
+        if(usersArrayIndex === usersArray.length -1) {
+            generateModal(usersArray[0]);
+            console.log('index: ' + usersArrayIndex);
+        } else {
+            generateModal(usersArray[usersArrayIndex + 1])
+            console.log('index: ' + usersArrayIndex);
+        }
+    });
+        
+    
+    prev.addEventListener('click', () => {
+        bodyElement.removeChild(modalContainer)
+        if(usersArrayIndex === 0) {
+            generateModal(usersArray[usersArray.length -1]);
+            console.log('index: ' + usersArrayIndex);
+        } else {
+            generateModal(usersArray[usersArrayIndex - 1])
+            console.log('index: ' + usersArrayIndex);
+        }
+    });
+
 }            
           
-//click event on the card to display modal window 
+                //click event on the card to display modal window 
 galleryDiv.addEventListener('click', (e) => {
     if(e.target.className.includes('card')) {
     generateModal(usersArray[e.target.title]);
 
-    console.log(`clicked: ${e.target} `);
+    //console.log(`clicked: ${e.target} `);
     }
 });           
    
