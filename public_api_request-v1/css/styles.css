@@ -149,13 +149,13 @@ header h1 {
 .modal-close-btn {
     position: absolute;
     top: 15px;
-    right: 15px;
+    right: 35px;
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(0, 0, 0, 0.8);
+    color: rgba(0, 0, 0, 0.8);
+    background: white (0, 0, 0, 0.8);
     outline: none;
     border-radius: 0.25em;
-    border: 1px solid rgba(50, 50, 50, 0.3);
+    border: none;
 }
 
 .modal-img {

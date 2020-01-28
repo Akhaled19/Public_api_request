@@ -1,7 +1,7 @@
 
                                 //Global Variables 
 //header
-const searchDiv = document.getElementsByClassName('search-container');
+const searchDiv = document.querySelector(' div .search-container');
 const galleryDiv = document.getElementById('gallery');
 //console.log(`the problem: ${galleryDiv}`);
 
@@ -24,13 +24,13 @@ let usersArray = [];
             //console.log(generateCards);
         })
     //catching errors     
-       // .catch( err => console.error(`Problem with request: ${err.message}`) )
+       .catch( err => console.error(`Problem with request: ${err.message}`) )
     
         
                                //helper functions
     //deserializing JSON dob string as JS date object 
     //00/00/0000
-    const dateFormat = /^\d{2}-\d{2}-\d{4}/;  
+    const dateFormat =  /^\d{2}-\d{2}-\d{2}Z$/;  
     
     function reviver(dob) {
         if(typeof dob === 'string' && dateFormat.test(dob)) {
@@ -39,22 +39,7 @@ let usersArray = [];
         return dob;
     }
 
-    
-
-                               //Search Box// 
-//is can be filtered by name 
-function appendSearchDiv(data) {
-searchDiv.innerHTML = `
-    <form action="#" method="get">
-        <input type="search" id="search-input" class="search-input" placeholder="Search...">
-        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-    </form>
-`; 
-searchDiv.action = '#';
-searchDiv.method = 'get';
-}
        
-
                                //User Directory//     
 
 //function creates a card for each user 
@@ -80,7 +65,6 @@ function generateCards(employee) {
     }    
 }  
 
-
                              //Modal Window//
 //function creates modal for each user (extends info)                             
 function generateModal(user) {
@@ -99,7 +83,7 @@ function generateModal(user) {
                 <hr>
                 <p class="modal-text">${user.cell}</p>
                 <p class="modal-text">${user.location.street.number} ${user.location.street.name}, ${user.location.city}, ${user.location.state}, ${user.location.postcode}</p>
-                <p class="modal-text">${user.dob.date}</p>
+                <p class="modal-text">Birthday: ${user.dob.date.slice(5, 7)}/${user.dob.date.slice(8, 10)}/${user.dob.date.slice(2, 4)}</p>
             </div>
         </div>
             <div class="modal-btn-container">
@@ -107,7 +91,7 @@ function generateModal(user) {
                 <button type="button" id="modal-next" class="modal-next btn">Next</button>
             </div>
     `;
-    console.log(`birthday: ${user.dob.data}`);
+    console.log(`birthday: ${ typeof reviver(user.dob.data)}`);
    
     bodyElement.appendChild(modalContainer);
     modalContainer.style.display = 'block';
@@ -154,33 +138,35 @@ function generateModal(user) {
 galleryDiv.addEventListener('click', (e) => {
     if(e.target.className.includes('card')) {
     generateModal(usersArray[e.target.title]);
-
-    //console.log(`clicked: ${e.target} `);
     }
-});           
-   
+});  
 
-                             //Modal Window//
+                               //Search Box// 
+//creates and displays search box onto the page
+let form = `
+    <form action="#" method="get">
+        <input type="search" id="search-input" class="search-input" placeholder="Search...">
+        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    </form>
+`; 
+searchDiv.innerHTML = form;
 
-//Click event on user = open detail modal window 
+//adds functionality to the search box
+const input = document.getElementById('search-input');
+const searchBox = document.querySelector('form');
 
-    //add functionality to switch back and forth between is 
-        //beginning and end of the list !== error in the console 
+searchDiv.addEventListener('keyup', () => {
+    for(i = 0; i < usersArray.length; i++) {
+        //checks if the first or last name input value exists in the userArray[]  
+        if(usersArray[i].name.first.toLowerCase().includes(input.textContent.toLowerCase()) || usersArray[i].name.last.toLowerCase().includes(input.textContent.toLowerCase())) {
+            document.querySelector(`[title="${i}"]`).style.display = '';
+        } else  {
+            document.querySelector(`[title="${i}"]`).style.display = 'none';
+        } 
+    }
+});
 
-    //Modal window displays the following:
-        // i image 
-        // Name 
-        //Email 
-        //City or location 
-        //Cell Number 
-        //Detailed Address(street name & number, state or country, and post code)
-        // 'X' to close the modal window    
-
-                            //Structure, style, CSS
-
-//The elements of the directory and modal window are in place & match the mockups 
-//Add styling:
-    //color
-    //background color 
-    //font
-    //box or text shadows                             
+//Prevent search bar from submitting by default (?)
+searchDiv.addEventListener('submit', (e) => {
+    e.preventDefault();
+});                           
