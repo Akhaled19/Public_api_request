@@ -29,15 +29,15 @@ let usersArray = [];
         
                                //helper functions
     //deserializing JSON dob string as JS date object 
-    //00/00/0000
-    const dateFormat =  /^\d{2}-\d{2}-\d{2}Z$/;  
+    //00/00/00
+    /** const dateFormat =  /^\d{2}-\d{2}-\d{2}Z$/;  
     
     function reviver(dob) {
         if(typeof dob === 'string' && dateFormat.test(dob)) {
             return new Date(dob)
         }
         return dob;
-    }
+    } */   
 
        
                                //User Directory//     
