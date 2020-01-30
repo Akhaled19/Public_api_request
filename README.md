@@ -12,7 +12,7 @@ Built an app for a fictional company called Awsome Startup, a distributed compan
 * While in the modals you can click to move to the previous employee or the next employee 
 * Modals have a close buttons
 
-##Changes I made to styles/css: 
+## Changes I made to styles/css: 
 * 
 
  ### Future updates
