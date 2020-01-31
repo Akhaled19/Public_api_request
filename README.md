@@ -1,4 +1,4 @@
-# public API request
+# Public API Request
 
 Azal Khaled's Public API Requests Project 5 as a TeamTreehouse Full Stack JavaScript Talent Path student.
 
