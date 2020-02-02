@@ -91,7 +91,7 @@ function generateModal(user) {
                 <button type="button" id="modal-next" class="modal-next btn">Next</button>
             </div>
     `;
-    console.log(`birthday: ${ typeof reviver(user.dob.data)}`);
+    
    
     bodyElement.appendChild(modalContainer);
     modalContainer.style.display = 'block';
