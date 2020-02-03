@@ -1,7 +1,7 @@
 
                                 //Global Variables 
 //header
-const searchDiv = document.querySelector(' div .search-container');
+//const searchDiv = document.querySelector(' div .search-container');
 const galleryDiv = document.getElementById('gallery');
 //console.log(`the problem: ${galleryDiv}`);
 
@@ -144,6 +144,16 @@ galleryDiv.addEventListener('click', (e) => {
                                //Search Box// 
 //creates and displays search box onto the page
 
+//embed the search box into the page
+/**let html = `
+    <form action='#' method='get'>
+        <input type="search" id="search-input" class="search-input" placeholder="Search...">
+        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    </form>    
+`; 
+
+searchDiv.innerHTML = html;
+
 //variables 
 const searchInput = document.getElementById('search-input');
 const searchForm = document.querySelector('form');
@@ -154,17 +164,6 @@ noUser.innerHTML = 'No user found.';
 bodyElement.appendChild(noUser);
 noUser.style.display = 'none';
 
-//embed the search box into the page
-let html = `
-    <form action='#' method='get'>
-        <input type="search" id="search-input" class="search-input" placeholder="Search...">
-        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-    </form>    
-`; 
-
-searchDiv.innerHTML = html;
-//searchDiv.appendChild(searchForm);
-
 //adds functionality to the search box
 
 searchForm.addEventListener('keyup', () => {
@@ -172,7 +171,7 @@ searchForm.addEventListener('keyup', () => {
     for(i = 0; i < usersArray.length; i++) {
         //checks if the first or last name input value exists in the userArray[]  
         if(usersArray[i].name.first.toLowerCase().includes(searchInput.value.toLowerCase()) || usersArray[i].name.last.toLowerCase().includes(input.value.toLowerCase())) {
-            document.querySelector(`[title="${i}"]`).style.display = '';
+            document.querySelector(`[title="${i}"]`).style.display = 'block';
             displayCards +=1;
             console.log(searchInput);
         } else  {
@@ -185,8 +184,40 @@ searchForm.addEventListener('keyup', () => {
         noUser.style.display = 'none';
     }
 });
+*/
 
 //Prevent search bar from submitting by default (?)
 /**searchForm.addEventListener('submit', (e) => {
     e.preventDefault();
 });*/                           
+console.log('array of: ' + usersArray);
+//search 
+const searchDiv = document.querySelector(' div .search-container');
+
+let html = `
+    <form id='search-containers' action='#' method='get'>
+        <input type="search" id="search-input" class="search-input" placeholder="Search...">
+        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    </form>    
+`;
+searchDiv.innerHTML = html; 
+
+const searchBar = document.forms['search-containers'].querySelector('input');
+
+searchBar.addEventListener('keyup', (e) => {
+    //grab the search tool
+    const term = e.target.value.toLowerCase();
+    //grab all the div card  
+    const cards = [...document.getElementsByClassName('card-name')];
+    console.log('cards: ' + cards);
+    const filterCards = cards.filter(card => card.innerText.toLowerCase().includes(term));
+    //display or not display results of keyup
+    cards.forEach(card => {
+        if(filterCards.includes(card)) {
+            card.closest('.card').style.display = 'block';
+        }else {
+            card.closest('.card').style.display = 'none';
+        }
+    });
+
+});
