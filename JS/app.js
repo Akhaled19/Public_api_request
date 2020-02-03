@@ -113,10 +113,10 @@ function generateModal(user) {
         bodyElement.removeChild(modalContainer)
         if(usersArrayIndex === usersArray.length -1) {
             generateModal(usersArray[0]);
-            console.log('index: ' + usersArrayIndex);
+            //console.log('index: ' + usersArrayIndex);
         } else {
             generateModal(usersArray[usersArrayIndex + 1])
-            console.log('index: ' + usersArrayIndex);
+            //console.log('index: ' + usersArrayIndex);
         }
     });
         
@@ -125,10 +125,10 @@ function generateModal(user) {
         bodyElement.removeChild(modalContainer)
         if(usersArrayIndex === 0) {
             generateModal(usersArray[usersArray.length -1]);
-            console.log('index: ' + usersArrayIndex);
+            //console.log('index: ' + usersArrayIndex);
         } else {
             generateModal(usersArray[usersArrayIndex - 1])
-            console.log('index: ' + usersArrayIndex);
+            //console.log('index: ' + usersArrayIndex);
         }
     });
 
@@ -143,30 +143,50 @@ galleryDiv.addEventListener('click', (e) => {
 
                                //Search Box// 
 //creates and displays search box onto the page
-let form = `
-    <form action="#" method="get">
+
+//variables 
+const searchInput = document.getElementById('search-input');
+const searchForm = document.querySelector('form');
+const noUser = document.createElement('h2');
+
+//this message is displayed if no user match the search input value
+noUser.innerHTML = 'No user found.';
+bodyElement.appendChild(noUser);
+noUser.style.display = 'none';
+
+//embed the search box into the page
+let html = `
+    <form action='#' method='get'>
         <input type="search" id="search-input" class="search-input" placeholder="Search...">
         <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-    </form>
+    </form>    
 `; 
-searchDiv.innerHTML = form;
+
+searchDiv.innerHTML = html;
+//searchDiv.appendChild(searchForm);
 
 //adds functionality to the search box
-const input = document.getElementById('search-input');
-const searchBox = document.querySelector('form');
 
-searchDiv.addEventListener('keyup', () => {
+searchForm.addEventListener('keyup', () => {
+    let displayCards = 0;
     for(i = 0; i < usersArray.length; i++) {
         //checks if the first or last name input value exists in the userArray[]  
-        if(usersArray[i].name.first.toLowerCase().includes(input.textContent.toLowerCase()) || usersArray[i].name.last.toLowerCase().includes(input.textContent.toLowerCase())) {
+        if(usersArray[i].name.first.toLowerCase().includes(searchInput.value.toLowerCase()) || usersArray[i].name.last.toLowerCase().includes(input.value.toLowerCase())) {
             document.querySelector(`[title="${i}"]`).style.display = '';
+            displayCards +=1;
+            console.log(searchInput);
         } else  {
             document.querySelector(`[title="${i}"]`).style.display = 'none';
         } 
     }
+    if(displayCards < 1) {
+        noUser.style.display = 'block';
+    } else{
+        noUser.style.display = 'none';
+    }
 });
 
 //Prevent search bar from submitting by default (?)
-searchDiv.addEventListener('submit', (e) => {
+/**searchForm.addEventListener('submit', (e) => {
     e.preventDefault();
-});                           
+});*/                           
