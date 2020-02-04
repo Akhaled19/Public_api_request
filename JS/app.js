@@ -67,7 +67,7 @@ function generateCards(employee) {
                              //Modal Window//
 //function creates modal for each user (extends info)                             
 function generateModal(user) {
-    console.log(user);    
+    //console.log(user);    
     const modalContainer = document.createElement('div');
     modalContainer.setAttribute('class' , 'modal-container');
     modalContainer.innerHTML = 
@@ -167,7 +167,7 @@ searchBar.addEventListener('keyup', (e) => {
     const term = e.target.value.toLowerCase();
     //grab all the div card  
     const cards = [...document.getElementsByClassName('card-name')];
-    console.log('cards: ' + cards);
+    //console.log('cards: ' + cards);
     const filterCards = cards.filter(card => card.innerText.toLowerCase().includes(term));
     //display or not display results of keyup
     cards.forEach(card => {
