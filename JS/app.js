@@ -1,7 +1,6 @@
 
                                 //Global Variables 
 //header
-//const searchDiv = document.querySelector(' div .search-container');
 const galleryDiv = document.getElementById('gallery');
 //console.log(`the problem: ${galleryDiv}`);
 
@@ -108,7 +107,6 @@ function generateModal(user) {
     const next = document.getElementById('modal-next');
     let usersArrayIndex = usersArray.indexOf(user);
 
-
     next.addEventListener('click', () => {
         bodyElement.removeChild(modalContainer)
         if(usersArrayIndex === usersArray.length -1) {
@@ -120,7 +118,6 @@ function generateModal(user) {
         }
     });
         
-    
     prev.addEventListener('click', () => {
         bodyElement.removeChild(modalContainer)
         if(usersArrayIndex === 0) {
@@ -140,58 +137,12 @@ galleryDiv.addEventListener('click', (e) => {
     generateModal(usersArray[e.target.title]);
     }
 });  
+                         
 
-                               //Search Box// 
+                            //Search Box// 
 //creates and displays search box onto the page
 
 //embed the search box into the page
-/**let html = `
-    <form action='#' method='get'>
-        <input type="search" id="search-input" class="search-input" placeholder="Search...">
-        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-    </form>    
-`; 
-
-searchDiv.innerHTML = html;
-
-//variables 
-const searchInput = document.getElementById('search-input');
-const searchForm = document.querySelector('form');
-const noUser = document.createElement('h2');
-
-//this message is displayed if no user match the search input value
-noUser.innerHTML = 'No user found.';
-bodyElement.appendChild(noUser);
-noUser.style.display = 'none';
-
-//adds functionality to the search box
-
-searchForm.addEventListener('keyup', () => {
-    let displayCards = 0;
-    for(i = 0; i < usersArray.length; i++) {
-        //checks if the first or last name input value exists in the userArray[]  
-        if(usersArray[i].name.first.toLowerCase().includes(searchInput.value.toLowerCase()) || usersArray[i].name.last.toLowerCase().includes(input.value.toLowerCase())) {
-            document.querySelector(`[title="${i}"]`).style.display = 'block';
-            displayCards +=1;
-            console.log(searchInput);
-        } else  {
-            document.querySelector(`[title="${i}"]`).style.display = 'none';
-        } 
-    }
-    if(displayCards < 1) {
-        noUser.style.display = 'block';
-    } else{
-        noUser.style.display = 'none';
-    }
-});
-*/
-
-//Prevent search bar from submitting by default (?)
-/**searchForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-});*/                           
-console.log('array of: ' + usersArray);
-//search 
 const searchDiv = document.querySelector(' div .search-container');
 
 let html = `
@@ -203,7 +154,14 @@ let html = `
 searchDiv.innerHTML = html; 
 
 const searchBar = document.forms['search-containers'].querySelector('input');
+const noUser = document.createElement('h2');
 
+//this message is displayed if no user match the search input value
+noUser.innerHTML = 'No user found.';
+bodyElement.appendChild(noUser);
+noUser.style.display = 'none';
+
+//adds functionality to the search bar
 searchBar.addEventListener('keyup', (e) => {
     //grab the search tool
     const term = e.target.value.toLowerCase();
@@ -219,5 +177,10 @@ searchBar.addEventListener('keyup', (e) => {
             card.closest('.card').style.display = 'none';
         }
     });
+    if(filterCards < 1) {
+        noUser.style.display = 'block';
+    } else{
+        noUser.style.display = 'none';
+    }
 
 });
